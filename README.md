@@ -12,19 +12,19 @@ copy config-sample.py to config.py and edit it
 
 create the sqlite-database:
 
-  sqlite3 ./database.db < schema.sql
+    sqlite3 ./database.db < schema.sql
 
 start the webserver locally:
 
-  pythong flaskfile.py
+    python flaskfile.py
 
 or, if you are deploying to a real webserver, set up wsgi:
 
-  import sys
-  path = '..../flask-for-data-science'
-
-  if path not in sys.path:
-    sys.path.insert(0, path)
-
-  from flaskfile import app as application
+    import sys
+    path = '..../flask-for-data-science'
+    
+    if path not in sys.path:
+      sys.path.insert(0, path)
+   
+    from flaskfile import app as application
 
