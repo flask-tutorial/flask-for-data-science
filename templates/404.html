@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Error 404</h1>
+  <p>The page could not be found.  <a href="http://www.smashingapps.com/2014/01/31/examples-of-inspiring-404-error-pages-for-inspiration.html">404 inspiration</a></p>
+
+  <p><img src="{{ url_for('static', filename='404.jpg') }}" alt="404">
+{% endblock %}

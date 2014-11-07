@@ -1,0 +1,4 @@
+*~
+*.pyc
+database.db
+config.py

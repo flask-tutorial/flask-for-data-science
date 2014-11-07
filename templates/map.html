@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Table</h2>
+  <p>Display the Data from our database in a Map.</p>
+
+  {% if entries|count == 0 %}
+  <p><em>Unbelievable.  No entries here so far. entries is {{entries}}</p>
+  {% else %}
+  <div id="map" style="height:400px"></div>
+  {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+  // create a map in the "map" div, set the view to a given place and zoom
+  var map = L.map('map').setView([40.716407, -73.9930921], 12);
+
+  // add an OpenStreetMap tile layer
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  {% for entry in entries %}
+    marker = L.marker([{{ entry[3] }}, {{ entry[4] }}]).addTo(map);
+    marker.bindPopup("<b>{{ entry[0] }}</b><br>{{ entry[1] }}")
+  {% endfor %}
+</script>
+{% endblock %}

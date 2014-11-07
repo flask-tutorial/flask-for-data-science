@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Table</h2>
+  <p>Display the Data from the MTA-API in a Map.</p>
+
+  <p>Choose your Bus:
+    <a href="{{ url_for('map_api') }}?busline=B26">B26</a> |
+    <a href="{{ url_for('map_api') }}?busline=B54">B54</a> |
+    <a href="{{ url_for('map_api') }}?busline=B61">B61</a> |
+    <a href="{{ url_for('map_api') }}?busline=B69">B69</a> 
+
+  {% if entries|count == 0 %}
+  <p><em>Unbelievable.  No entries here so far. </p>
+  {% else %}
+  <div id="map" style="height:400px"></div>
+  {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+  // create a map in the "map" div, set the view to a given place and zoom
+  var map = L.map('map').setView([40.690407, -73.9430921], 13);
+
+  // add an OpenStreetMap tile layer
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  {% for location in entries %}
+    marker = L.marker([{{ location.Latitude }}, {{ location.Longitude }}]).addTo(map);
+  {% endfor %}
+</script>
+{% endblock %}

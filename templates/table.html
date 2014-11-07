@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Table</h2>
+  <p>Display the Data from our database in a table.</p>
+
+  {% if entries|count == 0 %}
+  <p><em>Unbelievable.  No entries here so far. entries is {{entries}}</p>
+  {% else %}
+    <table id="myTable" class="table">
+      <tr>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Mood</th>
+        <th>Position</th>
+      </tr>
+    {% for entry in entries %}
+      <tr>
+        <td>{{ entry[0] }}</td>
+        <td>{{ entry[1] }}</td>
+        <td>{{ entry[2] }}</td>
+        <td>{{ entry[3] }}, {{ entry[4] }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config.APP_NAME }}</title>
+
+    <!-- We are using Twitter Bootstrap in the cloud, see http://getbootstrap.com/getting-started/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">{{ config.APP_NAME }}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('index')   }}">Home</a></li>
+            <li><a href="{{ url_for('form')    }}">Form</a></li>
+            <li><a href="{{ url_for('table')   }}">Table</a></li>
+            <li><a href="{{ url_for('map')     }}">Map</a></li>
+            <li><a href="{{ url_for('map_api') }}?busline=B26">Map and API</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if not session.logged_in %}
+            <li><a href="{{ url_for('login') }}">log in</a></li>
+            {% else %}
+            <li><a href="{{ url_for('logout') }}">log out</a></li>
+            {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      {% for message in get_flashed_messages() %}
+      <div class="alert info fade in">
+        <button class="close" data-dismiss="alert">×</button>
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+
+  
+    <!-- We are using jquery and Twitter Bootstrap javascript in the cloud, see http://getbootstrap.com/getting-started/ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script>
+      $(function(){
+        // from https://stackoverflow.com/questions/4866284/jquery-add-class-active-on-menu
+        var url = window.location.pathname; 
+        // create regexp to match current url pathname and remove trailing slash if present 
+        // as it could collide with the link in navigation in case trailing slash wasn't present there
+        var urlRegExp = new RegExp("^" + url + "$"); 
+        // now grab every link from the navigation
+        $('.navbar-nav a').each(function(){
+          // and test its normalized href against the url pathname regexp
+          href = $(this).attr('href');
+          if(urlRegExp.test(href)){
+            $(this).parents('li').addClass('active');
+          }
+        });
+
+      });
+    </script>
+    {% block javascript %}{% endblock %}
+  </body>
+</html>

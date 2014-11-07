@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Form</h2>
+  <p>The Data you enter here will be saved in a database on our server</p>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form method="post" role="form">
+    <div class="form-group">
+      <label for="title" class="control-label">Title</label>
+      <input type="text" class="form-control" name="title" id="title" placeholder="enter your title">
+    </div>
+    <div class="form-group">
+      <label for="text" class="control-label">Long Text</label>
+      <textarea class="form-control" name="text" id="text"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="mood" class="control-label">My Mood</label>
+      <select class="form-control" name="mood" id="mood">
+        <option value="0">--- please select an option ----</option>
+        <option value="1">Great</option>
+        <option value="2">Good</option>
+        <option value="3">Neutral</option>
+        <option value="4">Bad</option>
+        <option value="5">Terrible</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="lat" class="control-label">Title</label>
+      <input type="text" class="form-control" name="lat" id="lat" placeholder="latitude (as one number e.g. 40.7127)">
+    </div>
+    <div class="form-group">
+      <label for="long" class="control-label">Title</label>
+      <input type="text" class="form-control" name="long" id="long" placeholder="longitude (as one number e.g. -74.0059)">
+    </div>
+    <button type="submit" class="btn btn-default">Sign in</button>
+  </form>
+{% endblock %}
+
+{% block javascript %}
+<script>
+$( document ).ready(function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+  function showPosition(position) {
+    $('#lat').val( position.coords.latitude );
+    $('#long').val( position.coords.longitude );
+  }
+});
+</script>
+{% endblock %}
