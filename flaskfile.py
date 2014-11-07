@@ -79,6 +79,10 @@ def table():
   entries = cur.fetchall()
   return render_template('table.html', entries=entries)
 
+@app.route('/graph')
+def graph():
+  return render_template('graph.html')
+
 @app.route('/map')
 def map():
   cur = g.db.execute('select title, text, mood, lat, long from entries order by id desc')
@@ -130,5 +134,5 @@ def page_not_found(e):
 
 # ====================================================================================
 if __name__ == '__main__':
-  app.run(host='78.47.46.182')
+  app.run()
 # ====================================================================================
